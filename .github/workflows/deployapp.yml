@@ -62,7 +62,15 @@ jobs:
       run: sed -i '' 's/org.edx.mobile/org.gacco.mobile.jast.test/g' ./edX.xcodeproj/project.pbxproj
 
     - name: Build | xcodebuild archive
-      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .build/Archives/edX.xcarchive CURRENT_PROJECT_VERSION=${{ github.run_number }} archive
+      run: >
+        xcodebuild 
+          -workspace edx.xcworkspace 
+          -scheme edX 
+          -configuration Release 
+          -archivePath .build/Archives/edX.xcarchive 
+          PROVISIONING_PROFILE_SPECIFIER = JAST-Ad Hoc-Distribution
+          CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
+          archive
 #      run: set -o pipefail && xcodebuild -configuration Release archive -archivePath ./archive | xcpretty
 #      run: xcodebuild -exportArchive -archivePath archive -exportPath archive -exportOptionsPlist debugExportOptions.plist
 #      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release archive -archivePath ./archive
