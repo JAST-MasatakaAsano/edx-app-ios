@@ -54,12 +54,13 @@ jobs:
     - uses: Apple-Actions/download-provisioning-profiles@v1
       with:
         bundle-id: org.gacco.mobile.jast.test
+        profile-type: IOS_APP_STORE
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-    - name: Change PRODUCT_BUNDLE_IDENTIFIER
-      run: sed -i '' 's/org.edx.mobile/org.gacco.mobile.jast.test/g' ./edX.xcodeproj/project.pbxproj
+#    - name: Change PRODUCT_BUNDLE_IDENTIFIER
+#      run: sed -i '' 's/org.edx.mobile/org.gacco.mobile.jast.test/g' ./edX.xcodeproj/project.pbxproj
 
     - name: Build | xcodebuild archive
       run: >
@@ -68,7 +69,8 @@ jobs:
           -scheme edX 
           -configuration Release 
           -archivePath .build/Archives/edX.xcarchive 
-          PROVISIONING_PROFILE_SPECIFIER = JAST-Ad Hoc-Distribution
+          PRODUCT_BUNDLE_IDENTIFIER = org.gacco.mobile.jast.test
+          PROVISIONING_PROFILE_SPECIFIER = JAST-TestFlight-Distribution
           CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
           archive
 #      run: set -o pipefail && xcodebuild -configuration Release archive -archivePath ./archive | xcpretty
