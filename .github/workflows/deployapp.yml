@@ -69,7 +69,7 @@ jobs:
           -scheme edX 
           -configuration Release 
           -archivePath .build/Archives/edX.xcarchive 
-          PROVISIONING_PROFILE_SPECIFIER = JAST-TestFlight-Distribution
+          PROVISIONING_PROFILE_SPECIFIER = Profiles/b95a467a-20e5-44d6-a95d-becec2cf45a6
           CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
           archive
 #      run: set -o pipefail && xcodebuild -configuration Release archive -archivePath ./archive | xcpretty
