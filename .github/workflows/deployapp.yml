@@ -35,13 +35,13 @@ jobs:
         ruby-version: 2.4.0
         bundler-cache: true
 
-    - name: Cache - cocoapods
-      id: cache-cocoapods
-      uses: actions/cache@v2
-      with:
-        path: Pods
-        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-        restore-keys: ${{ runner.os }}-pods-
+#    - name: Cache - cocoapods
+#      id: cache-cocoapods
+#      uses: actions/cache@v2
+#      with:
+#        path: Pods
+#        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+#        restore-keys: ${{ runner.os }}-pods-
 
     - name: Install - cocoapods
       run: pod install --repo-update
@@ -61,8 +61,8 @@ jobs:
     - name: Change PRODUCT_BUNDLE_IDENTIFIER
       run: sed -i '' 's/org.edx.mobile/org.gacco.t7-mobile/g' ./edX.xcodeproj/project.pbxproj
 
-    - name: Update - cocoapods
-      run: pod update
+#    - name: Update - cocoapods
+#      run: pod update
 
     - name: Build | xcodebuild archive
       run: >
