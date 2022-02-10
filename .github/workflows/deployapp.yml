@@ -54,7 +54,6 @@ jobs:
     - uses: Apple-Actions/download-provisioning-profiles@v1
       with:
         bundle-id: org.gacco.mobile.jast.test
-        profile-type: IOS_APP_STORE
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
