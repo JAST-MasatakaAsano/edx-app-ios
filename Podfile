@@ -38,6 +38,7 @@ post_install do |installer|
         target.build_configurations.each do |config|
             config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = "YES"
             config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+            config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
         end
     end
 end
