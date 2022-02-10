@@ -43,8 +43,8 @@ jobs:
 #        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
 #        restore-keys: ${{ runner.os }}-pods-
 
-    - name: Install - cocoapods
-      run: pod install --repo-update
+#    - name: Install - cocoapods
+#      run: pod install --repo-update
 
     - uses: Apple-Actions/import-codesign-certs@v1
       with:
