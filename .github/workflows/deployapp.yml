@@ -43,9 +43,6 @@ jobs:
 #        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
 #        restore-keys: ${{ runner.os }}-pods-
 
-#    - name: Install - cocoapods
-#      run: pod install --repo-update
-
     - uses: Apple-Actions/import-codesign-certs@v1
       with:
         p12-file-base64: ${{ secrets.CERTIFICATES_P12_BASE64 }}
@@ -60,6 +57,9 @@ jobs:
 
     - name: Change PRODUCT_BUNDLE_IDENTIFIER
       run: sed -i '' 's/org.edx.mobile/org.gacco.t7-mobile/g' ./edX.xcodeproj/project.pbxproj
+
+    - name: Install - cocoapods
+      run: pod install --repo-update
 
 #    - name: Update - cocoapods
 #      run: pod update
