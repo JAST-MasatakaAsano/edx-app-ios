@@ -64,21 +64,22 @@ jobs:
 #    - name: Update - cocoapods
 #      run: pod update
 
-    - name: Build | xcodebuild archive
-      run: >
-        xcodebuild 
-          -workspace edx.xcworkspace 
-          -scheme edX 
-          -configuration Release 
-          -archivePath .build/Archives/edX.xcarchive 
-          CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
-          archive
+#    - name: Build | xcodebuild archive
+#      run: >
+#        xcodebuild 
+#          -workspace edx.xcworkspace 
+#          -scheme edX 
+#          -configuration Release 
+#          -archivePath .build/Archives/edX.xcarchive 
+#          CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
+#          archive
+
 #      run: set -o pipefail && xcodebuild -configuration Release archive -archivePath ./archive | xcpretty
 #      run: xcodebuild -exportArchive -archivePath archive -exportPath archive -exportOptionsPlist debugExportOptions.plist
 #      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release archive -archivePath ./archive
 
-#    - name: Build #繝薙Ν繝碓K
-#      run: xcodebuild -workspace edx.xcworkspace -scheme edX -sdk iphonesimulator
+    - name: Build #success
+      run: xcodebuild -workspace edx.xcworkspace -scheme edX -sdk iphonesimulator
 
 #    - name: Build
 #      run: xcodebuild -configuration Release build
