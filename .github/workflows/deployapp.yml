@@ -61,6 +61,9 @@ jobs:
     - name: Change PRODUCT_BUNDLE_IDENTIFIER
       run: sed -i '' 's/org.edx.mobile/org.gacco.t7-mobile/g' ./edX.xcodeproj/project.pbxproj
 
+    - name: Update - cocoapods
+      run: pod update
+
     - name: Build | xcodebuild archive
       run: >
         xcodebuild 
