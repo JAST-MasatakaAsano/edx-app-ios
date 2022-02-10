@@ -79,7 +79,7 @@ jobs:
 #      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release archive -archivePath ./archive
 
     - name: Build #success
-      run: xcodebuild -workspace edx.xcworkspace -scheme edX -sdk iphonesimulator
+      run: xcodebuild -workspace edx.xcworkspace -scheme edX -sdk iphoneos
 
 #    - name: Build
 #      run: xcodebuild -configuration Release build
