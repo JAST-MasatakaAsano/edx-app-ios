@@ -26,14 +26,14 @@ jobs:
       with:
         persist-credentials: false
 
-    - name: Setup - Xcode
-      run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
+#    - name: Setup - Xcode
+#      run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
 
-    - name: Setup - Ruby and bundler dependencies
-      uses: ruby/setup-ruby@v1.57.0
-      with:
-        ruby-version: 2.4.0
-        bundler-cache: true
+#    - name: Setup - Ruby and bundler dependencies
+#      uses: ruby/setup-ruby@v1.57.0
+#      with:
+#        ruby-version: 2.4.0
+#        bundler-cache: true
 
 #    - name: Cache - cocoapods
 #      id: cache-cocoapods
@@ -58,8 +58,8 @@ jobs:
     - name: Change PRODUCT_BUNDLE_IDENTIFIER
       run: sed -i '' 's/org.edx.mobile/org.gacco.t7-mobile/g' ./edX.xcodeproj/project.pbxproj
 
-    - name: Install - cocoapods
-      run: pod install --repo-update
+#    - name: Install - cocoapods
+#      run: pod install --repo-update
 
 #    - name: Update - cocoapods
 #      run: pod update
