@@ -6740,7 +6740,7 @@
 				);
 				MARKETING_VERSION = 3.0.1;
 				OTHER_LDFLAGS = "$(inherited)";
-				OTHER_SWIFT_FLAGS = "";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = org.gacco.t7-mobile;
 				PRODUCT_NAME = edX;
 				PROVISIONING_PROFILE = "";
