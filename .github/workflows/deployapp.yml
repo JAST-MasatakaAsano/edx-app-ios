@@ -49,7 +49,7 @@ jobs:
 #        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
 #        restore-keys: ${{ runner.os }}-pods-
 
-    - run: pod deintegrate
+#    - run: pod deintegrate
     - name: Install - cocoapods
       run: pod install --repo-update
 
