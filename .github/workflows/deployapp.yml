@@ -71,7 +71,8 @@ jobs:
     - name: Change PRODUCT_BUNDLE_IDENTIFIER
       run: sed -i '' 's/org.edx.mobile/org.gacco.t7-mobile/g' ./edX.xcodeproj/project.pbxproj
 
-    - run: open edx.xcworkspace
+#    - run: open edx.xcworkspace
+    - run: ls -R Pods/FirebaseAnalytics/Frameworks
 
     - name: Build | xcodebuild archive
       run: >
