@@ -50,8 +50,8 @@ jobs:
 #        restore-keys: ${{ runner.os }}-pods-
 
 #    - run: pod deintegrate
-    - name: Install - cocoapods
-      run: pod install --repo-update
+#    - name: Install - cocoapods
+#      run: pod install --repo-update
 
 #    - name: Update - cocoapods
 #      run: pod update
@@ -72,7 +72,7 @@ jobs:
       run: sed -i '' 's/org.edx.mobile/org.gacco.t7-mobile/g' ./edX.xcodeproj/project.pbxproj
 
 #    - run: open edx.xcworkspace
-    - run: ls -R Pods/FirebaseAnalytics/Frameworks
+#    - run: ls -R Pods/FirebaseAnalytics/Frameworks
 
     - name: Build | xcodebuild archive
       run: >
