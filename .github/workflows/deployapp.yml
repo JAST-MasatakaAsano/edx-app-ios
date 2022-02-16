@@ -74,16 +74,24 @@ jobs:
 #    - run: open edx.xcworkspace
 #    - run: ls -R Pods/FirebaseAnalytics/Frameworks
 
-    - name: Build | xcodebuild archive
-      run: >
-        xcodebuild 
-          -workspace edx.xcworkspace 
-          -scheme edX 
-          -configuration Release 
-          -archivePath .build/Archives/edX.xcarchive 
-          -sdk iphoneos
-          CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
-          archive
+     - uses: sersoft-gmbh/xcodebuild-action@v1
+       with:
+         workspace: edx.xcworkspace
+         scheme: edX
+         sdk: iphoneos
+         build-settings: CURRENT_PROJECT_VERSION = ${{ github.run_number }}
+         action: archive
+
+#      - name: Build | xcodebuild archive
+#      run: >
+#        xcodebuild 
+#          -workspace edx.xcworkspace 
+#          -scheme edX 
+#          -configuration Release 
+#          -archivePath .build/Archives/edX.xcarchive 
+#          -sdk iphoneos
+#          CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
+#          archive
 
 #      run: set -o pipefail && xcodebuild -configuration Release archive -archivePath ./archive | xcpretty
 #      run: xcodebuild -exportArchive -archivePath archive -exportPath archive -exportOptionsPlist debugExportOptions.plist
