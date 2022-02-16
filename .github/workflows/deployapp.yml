@@ -12,6 +12,9 @@ on:
         - xcodebuild
         - bundleProdDebug
 
+env:
+  bundle-id: org.gacco.t7-mobile
+
 jobs:
   deploy:
     runs-on: macos-11
@@ -21,40 +24,11 @@ jobs:
       run: |
         echo "task: ${{ github.event.inputs.task }}"
 
-    - name: Checkout
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
       with:
         persist-credentials: false
 
-#    - name: Set up JDK 11
-#      uses: actions/setup-java@v2
-#      with:
-#        java-version: '11'
-#        distribution: 'adopt'
-
-    - name: Setup - Xcode
-      run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
-
-#    - name: Setup - Ruby and bundler dependencies
-#      uses: ruby/setup-ruby@v1.57.0
-#      with:
-#        ruby-version: 2.4.0
-#        bundler-cache: true
-
-#    - name: Cache - cocoapods
-#      id: cache-cocoapods
-#      uses: actions/cache@v2
-#      with:
-#        path: Pods
-#        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-#        restore-keys: ${{ runner.os }}-pods-
-
-#    - run: pod deintegrate
-#    - name: Install - cocoapods
-#      run: pod install --repo-update
-
-#    - name: Update - cocoapods
-#      run: pod update
+    - run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
 
     - uses: Apple-Actions/import-codesign-certs@v1
       with:
@@ -63,7 +37,7 @@ jobs:
 
     - uses: Apple-Actions/download-provisioning-profiles@v1
       with:
-        bundle-id: org.gacco.t7-mobile
+        bundle-id: ${{ env.bundle-id }}
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
