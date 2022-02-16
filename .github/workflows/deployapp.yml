@@ -79,8 +79,8 @@ jobs:
          workspace: edx.xcworkspace
          scheme: edX
          sdk: iphoneos
-         build-settings: CURRENT_PROJECT_VERSION = ${{ github.run_number }}
          action: archive
+#         build-settings: CURRENT_PROJECT_VERSION = ${{ github.run_number }}
 
 #      - name: Build | xcodebuild archive
 #      run: >
