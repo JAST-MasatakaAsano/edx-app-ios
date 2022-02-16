@@ -84,14 +84,15 @@ jobs:
 #         build-settings: CURRENT_PROJECT_VERSION = ${{ github.run_number }}
 
     - name: Build | xcodebuild archive
-      run: >
-        xcodebuild 
-          -workspace edx.xcworkspace 
-          -scheme edX 
-          -configuration Release 
-          -archivePath .build/Archives/edX.xcarchive 
-          CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
-          archive
+      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .build/Archives/edX.xcarchive archive
+#      run: >
+#        xcodebuild 
+#          -workspace edx.xcworkspace 
+#          -scheme edX 
+#          -configuration Release 
+#          -archivePath .build/Archives/edX.xcarchive 
+#          CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
+#          archive
 
 #      run: set -o pipefail && xcodebuild -configuration Release archive -archivePath ./archive | xcpretty
 #      run: xcodebuild -exportArchive -archivePath archive -exportPath archive -exportOptionsPlist debugExportOptions.plist
