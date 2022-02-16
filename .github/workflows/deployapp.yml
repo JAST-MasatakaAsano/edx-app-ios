@@ -84,7 +84,10 @@ jobs:
 #         build-settings: CURRENT_PROJECT_VERSION = ${{ github.run_number }}
 
     - name: Build | xcodebuild archive
-      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .build/Archives/edX.xcarchive CURRENT_PROJECT_VERSION = ${{ github.run_number }} archive
+      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .build/Archives/edX.xcarchive  archive
+      env:
+        CURRENT_PROJECT_VERSION: ${{ github.run_number }}
+        
 #      run: >
 #        xcodebuild 
 #          -workspace edx.xcworkspace 
