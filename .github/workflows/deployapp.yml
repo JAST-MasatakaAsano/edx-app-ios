@@ -74,7 +74,7 @@ jobs:
 #    - run: open edx.xcworkspace
 #    - run: ls -R Pods/FirebaseAnalytics/Frameworks
 
-     - uses: sersoft-gmbh/xcodebuild-action@v1.8.0
+    - uses: sersoft-gmbh/xcodebuild-action@v1.8.0
        with:
          workspace: edx.xcworkspace
          scheme: edX
