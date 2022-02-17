@@ -1,0 +1,17 @@
+name: test
+
+on:
+  workflow_dispatch:
+
+env:
+  bundle-id: org.gacco.t7-mobile
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set bundle-id
+        if: "!contains(github.ref, 'master')"
+        run: bundle-id=org.gacco.mobile
+      - run: echo $bundle-id
