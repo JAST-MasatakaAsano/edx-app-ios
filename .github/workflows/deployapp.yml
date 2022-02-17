@@ -38,9 +38,11 @@ jobs:
       run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .archive archive
       env:
         CURRENT_PROJECT_VERSION: ${{ github.run_number }}
-        
-    - name: xcodebuild export
-      run: xcodebuild -exportArchive -archivePath .archive -exportPath .export -exportOptionsPlist ExportOptions.plist
+
+    - run: ls -R .archive
+
+#    - name: xcodebuild export
+#      run: xcodebuild -exportArchive -archivePath .archive -exportPath .export -exportOptionsPlist ExportOptions.plist
 
 #      run: >
 #        xcodebuild 
