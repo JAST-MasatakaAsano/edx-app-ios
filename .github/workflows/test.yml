@@ -13,8 +13,8 @@ jobs:
     steps:
       - name: Set bundle-id
         if: "!contains(github.ref, 'master')"
-        run: echo "org.gacco.mobile" >> $bundle-id
+        run: echo "bundle-id=org.gacco.mobile" >> $GITHUB_ENV
       - name: Set bundle-id
         if: contains(github.ref, 'develop')
-        run: echo "org.gacco.mobile.develop" >> $bundle-id
-      - run: echo $bundle-id
+        run: echo "bundle-id=org.gacco.mobile.develop" >> $GITHUB_ENV
+      - run: echo "${{ env.bundle-id }}"
