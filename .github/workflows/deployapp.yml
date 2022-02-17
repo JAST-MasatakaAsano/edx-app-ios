@@ -35,14 +35,14 @@ jobs:
       run: sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
 
     - name: xcodebuild archive
-      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .archive archive
+      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath ./archive archive
       env:
         CURRENT_PROJECT_VERSION: ${{ github.run_number }}
 
-    - run: ls -aR .archive
+    - run: ls -aR ./archive
 
 #    - name: xcodebuild export
-#      run: xcodebuild -exportArchive -archivePath .archive -exportPath .export -exportOptionsPlist ExportOptions.plist
+#      run: xcodebuild -exportArchive -archivePath ./archive -exportPath ./export -exportOptionsPlist ExportOptions.plist
 
 #      run: >
 #        xcodebuild 
