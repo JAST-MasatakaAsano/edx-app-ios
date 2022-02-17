@@ -42,8 +42,8 @@ jobs:
         api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-#    - name: Change PRODUCT_BUNDLE_IDENTIFIER
-#      run: sed -i '' 's/org.edx.mobile/org.gacco.t7-mobile/g' ./edX.xcodeproj/project.pbxproj
+    - name: Change PRODUCT_BUNDLE_IDENTIFIER
+      run: sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
 
 #    - run: open edx.xcworkspace
 #    - run: ls -R Pods/FirebaseAnalytics/Frameworks
@@ -57,7 +57,7 @@ jobs:
 #         action: archive
 #         build-settings: CURRENT_PROJECT_VERSION = ${{ github.run_number }}
 
-    - name: Build | xcodebuild archive
+    - name: xcodebuild archive
       run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .build/Archives/edX.xcarchive  archive
       env:
         CURRENT_PROJECT_VERSION: ${{ github.run_number }}
