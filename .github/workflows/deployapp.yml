@@ -1,0 +1,85 @@
+# deploy
+
+name: Deploy App
+
+on:
+  workflow_dispatch:
+#    inputs:
+#      task:
+#        type: choice
+#        description: gradle task
+#        options: 
+#        - xcodebuild
+#        - bundleProdDebug
+
+env:
+  bundle-id: org.gacco.t7-mobile
+
+jobs:
+  deploy:
+    runs-on: macos-11
+
+    steps:
+    - name: Show inputs
+      run: |
+        echo "task: ${{ github.event.inputs.task }}"
+
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
+
+    - uses: Apple-Actions/import-codesign-certs@v1
+      with:
+        p12-file-base64: ${{ secrets.CERTIFICATES_P12_BASE64 }}
+        p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+
+    - uses: Apple-Actions/download-provisioning-profiles@v1
+      with:
+        bundle-id: ${{ env.bundle-id }}
+        issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+        api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
+        api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+
+    - name: Change PRODUCT_BUNDLE_IDENTIFIER
+      run: sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
+
+#    - run: open edx.xcworkspace
+#    - run: ls -R Pods/FirebaseAnalytics/Frameworks
+
+#    - uses: sersoft-gmbh/xcodebuild-action@v1.8.0
+#      with:
+#         workspace: edx.xcworkspace
+#         scheme: edX
+#         configuration: Release
+#         sdk: iphoneos
+#         action: archive
+#         build-settings: CURRENT_PROJECT_VERSION = ${{ github.run_number }}
+
+    - name: xcodebuild archive
+      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .build/Archives/edX.xcarchive  archive
+      env:
+        CURRENT_PROJECT_VERSION: ${{ github.run_number }}
+        
+#      run: >
+#        xcodebuild 
+#          -workspace edx.xcworkspace 
+#          -scheme edX 
+#          -configuration Release 
+#          -archivePath .build/Archives/edX.xcarchive 
+#          CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
+#          archive
+
+#      run: set -o pipefail && xcodebuild -configuration Release archive -archivePath ./archive | xcpretty
+#      run: xcodebuild -exportArchive -archivePath archive -exportPath archive -exportOptionsPlist debugExportOptions.plist
+#success
+#    - run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release archive -archivePath .build/Archives/edX.xcarchive
+
+#    - name: Build #success
+#      run: xcodebuild -workspace edx.xcworkspace -scheme edX -sdk iphoneos
+
+#    - name: Build
+#      run: xcodebuild -configuration Release build
+
+    - run: echo "This job's status is ${{ job.status }}."
