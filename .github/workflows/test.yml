@@ -13,8 +13,8 @@ jobs:
     steps:
       - name: Set bundle-id
         if: "!contains(github.ref, 'master')"
-        run: export bundle-id=org.gacco.mobile
+        run: echo "org.gacco.mobile" >> $bundle-id
       - name: Set bundle-id
         if: contains(github.ref, 'develop')
-        run: export bundle-id=org.gacco.mobile.develop
+        run: echo "org.gacco.mobile.develop" >> $bundle-id
       - run: echo $bundle-id
