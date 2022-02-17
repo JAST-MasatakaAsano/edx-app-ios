@@ -39,8 +39,9 @@ jobs:
       env:
         CURRENT_PROJECT_VERSION: ${{ github.run_number }}
 
-    - run: ls
-    - run: ls -R archive
+    - run: |
+       ls
+       ls -R archive.xcarchive
 
 #    - name: xcodebuild export
 #      run: xcodebuild -exportArchive -archivePath ./archive -exportPath ./export -exportOptionsPlist ExportOptions.plist
