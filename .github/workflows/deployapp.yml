@@ -4,13 +4,6 @@ name: Deploy App
 
 on:
   workflow_dispatch:
-#    inputs:
-#      task:
-#        type: choice
-#        description: gradle task
-#        options: 
-#        - xcodebuild
-#        - bundleProdDebug
 
 env:
   bundle-id: org.gacco.t7-mobile
@@ -20,10 +13,6 @@ jobs:
     runs-on: macos-11
 
     steps:
-    - name: Show inputs
-      run: |
-        echo "task: ${{ github.event.inputs.task }}"
-
     - uses: actions/checkout@v2
       with:
         persist-credentials: false
@@ -45,23 +34,14 @@ jobs:
     - name: Change PRODUCT_BUNDLE_IDENTIFIER/PROVISIONING_PROFILE_SPECIFIER
       run: sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
 
-#    - run: open edx.xcworkspace
-#    - run: ls -R Pods/FirebaseAnalytics/Frameworks
-
-#    - uses: sersoft-gmbh/xcodebuild-action@v1.8.0
-#      with:
-#         workspace: edx.xcworkspace
-#         scheme: edX
-#         configuration: Release
-#         sdk: iphoneos
-#         action: archive
-#         build-settings: CURRENT_PROJECT_VERSION = ${{ github.run_number }}
-
     - name: xcodebuild archive
-      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .build/Archives/edX.xcarchive  archive
+      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .  archive
       env:
         CURRENT_PROJECT_VERSION: ${{ github.run_number }}
         
+    - name: xcodebuild export
+      run: xcodebuild -exportArchive -archivePath . -exportPath .export -exportOptionsPlist ExportOptions.plist
+
 #      run: >
 #        xcodebuild 
 #          -workspace edx.xcworkspace 
