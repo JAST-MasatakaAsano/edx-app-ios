@@ -33,13 +33,18 @@ jobs:
         api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-    - name: Change PRODUCT_BUNDLE_IDENTIFIER/PROVISIONING_PROFILE_SPECIFIER
-      run: sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
+    - name: change bundle-id
+      run: |
+        sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
+        sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./ExportOptions.plist
+
+    - uses: poad/xcode-build-number-auto-update@v1
+      with:
+        path: ./Source/edX-Info.plist
+        new-number: ${{ github.run_number }}
 
     - name: xcodebuild archive
       run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath ./archive.xcarchive archive
-      env:
-        CURRENT_PROJECT_VERSION: ${{ github.run_number }}
 
     - name: xcodebuild export
       run: xcodebuild -exportArchive -archivePath ./archive.xcarchive -exportPath ./export -exportOptionsPlist ExportOptions.plist
