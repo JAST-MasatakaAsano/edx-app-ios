@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: echo ${{ github.repository }}
       - name: Set bundle-id
         if: "!contains(github.ref, 'master')"
         run: echo "bundle-id=org.gacco.mobile" >> $GITHUB_ENV
