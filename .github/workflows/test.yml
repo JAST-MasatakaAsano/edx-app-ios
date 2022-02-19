@@ -18,9 +18,14 @@ jobs:
 
     steps:
       - run: echo ${{github.ref}}
+
+      - run: echo "build-number=$(date +'%Y%m%d.%H%M')" >> $GITHUB_ENV
+        env:
+          TZ: 'Asia/Tokyo'
+      - run: echo "${{ env.build-number }}"
+
       - run: echo "bundle-id=org.gacco.mobile" >> $GITHUB_ENV
         if: contains(github.ref, 'master')
       - run: echo "bundle-id=org.gacco.mobile.develop" >> $GITHUB_ENV
         if: contains(github.ref, 'develop')
-        
       - run: echo "${{ env.bundle-id }}"
