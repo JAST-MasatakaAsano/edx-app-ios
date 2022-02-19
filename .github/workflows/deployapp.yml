@@ -5,24 +5,24 @@ name: Deploy App
 on:
   workflow_dispatch:
     inputs:
-      task:
+      bundle-id:
         type: choice
-        description: gradle task
+        description: bundle-id
         options: 
-        - xcodebuild
-        - bundleProdDebug
+        - org.gacco.mobile.feature
 
 env:
-  bundle-id: org.gacco.t7-mobile
+  bundle-id: ${{ github.event.inputs.bundle-id }}
 
 jobs:
   deploy:
     runs-on: macos-11
 
     steps:
-    - name: Show inputs
-      run: |
-        echo "task: ${{ github.event.inputs.task }}"
+    - run: echo ${{github.ref}}
+
+    - run: echo "bundle-id=org.gacco.mobile.develop" >> $GITHUB_ENV
+      if: contains(github.ref, 'develop')
 
     - uses: actions/checkout@v2
       with:
@@ -42,44 +42,27 @@ jobs:
         api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-    - name: Change PRODUCT_BUNDLE_IDENTIFIER
-      run: sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
+    - name: change bundle-id
+      run: |
+        sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
+        sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./ExportOptions.plist
 
-#    - run: open edx.xcworkspace
-#    - run: ls -R Pods/FirebaseAnalytics/Frameworks
-
-#    - uses: sersoft-gmbh/xcodebuild-action@v1.8.0
-#      with:
-#         workspace: edx.xcworkspace
-#         scheme: edX
-#         configuration: Release
-#         sdk: iphoneos
-#         action: archive
-#         build-settings: CURRENT_PROJECT_VERSION = ${{ github.run_number }}
+    - uses: poad/xcode-build-number-auto-update@v1
+      with:
+        path: ./Source/edX-Info.plist
+        new-number: ${{ github.run_number }}
 
     - name: xcodebuild archive
-      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath .build/Archives/edX.xcarchive  archive
-      env:
-        CURRENT_PROJECT_VERSION: ${{ github.run_number }}
-        
-#      run: >
-#        xcodebuild 
-#          -workspace edx.xcworkspace 
-#          -scheme edX 
-#          -configuration Release 
-#          -archivePath .build/Archives/edX.xcarchive 
-#          CURRENT_PROJECT_VERSION = ${{ github.run_number }} 
-#          archive
+      run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath ./archive.xcarchive archive
 
-#      run: set -o pipefail && xcodebuild -configuration Release archive -archivePath ./archive | xcpretty
-#      run: xcodebuild -exportArchive -archivePath archive -exportPath archive -exportOptionsPlist debugExportOptions.plist
-#success
-#    - run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release archive -archivePath .build/Archives/edX.xcarchive
+    - name: xcodebuild export
+      run: xcodebuild -exportArchive -archivePath ./archive.xcarchive -exportPath ./export -exportOptionsPlist ExportOptions.plist
 
-#    - name: Build #success
-#      run: xcodebuild -workspace edx.xcworkspace -scheme edX -sdk iphoneos
+    - uses: apple-actions/upload-testflight-build@v1
+      with: 
+        app-path: 'export/edx.ipa' 
+        issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+        api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
+        api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-#    - name: Build
-#      run: xcodebuild -configuration Release build
-
-    - run: echo "This job's status is ${{ job.status }}."
+#    - run: echo "This job's status is ${{ job.status }}."
