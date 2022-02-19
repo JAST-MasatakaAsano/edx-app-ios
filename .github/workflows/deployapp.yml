@@ -47,10 +47,14 @@ jobs:
         sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
         sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./ExportOptions.plist
 
+    - run: echo "build-number=$(date +'%Y%m%d.%H%M')" >> $GITHUB_ENV
+      env:
+        TZ: 'Asia/Tokyo'
+
     - uses: poad/xcode-build-number-auto-update@v1
       with:
         path: ./Source/edX-Info.plist
-        new-number: ${{ github.run_number }}
+        new-number: ${{ env.build-number }}
 
     - name: xcodebuild archive
       run: xcodebuild -workspace edx.xcworkspace -scheme edX -configuration Release -archivePath ./archive.xcarchive archive
