@@ -8,8 +8,8 @@
 	<string>app-store</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>org.gacco.t7-mobile</key>
-		<string>org.gacco.t7-mobile</string>
+		<key>org.gacco.mobile</key>
+		<string>org.gacco.mobile</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>Apple Distribution</string>
@@ -18,7 +18,7 @@
 	<key>stripSwiftSymbols</key>
 	<true/>
 	<key>teamID</key>
-	<string>34M5FBPTR5</string>
+	<string>D9JR2A674U</string>
 	<key>uploadBitcode</key>
 	<false/>
 	<key>uploadSymbols</key>

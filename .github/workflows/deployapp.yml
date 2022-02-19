@@ -4,9 +4,15 @@ name: Deploy App
 
 on:
   workflow_dispatch:
+    inputs:
+      bundle-id:
+        type: choice
+        description: bundle-id
+        options: 
+        - org.gacco.mobile.feature
 
 env:
-  bundle-id: org.gacco.t7-mobile
+  bundle-id: ${{ github.event.inputs.bundle-id }}
 
 jobs:
   deploy:
@@ -14,6 +20,9 @@ jobs:
 
     steps:
     - run: echo ${{github.ref}}
+
+    - run: echo "bundle-id=org.gacco.mobile.develop" >> $GITHUB_ENV
+      if: contains(github.ref, 'develop')
 
     - uses: actions/checkout@v2
       with:
@@ -35,8 +44,8 @@ jobs:
 
     - name: change bundle-id
       run: |
-        sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
-        sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./ExportOptions.plist
+        sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
+        sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./ExportOptions.plist
 
     - uses: poad/xcode-build-number-auto-update@v1
       with:
