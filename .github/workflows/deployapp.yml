@@ -62,11 +62,11 @@ jobs:
     - name: xcodebuild export
       run: xcodebuild -exportArchive -archivePath ./archive.xcarchive -exportPath ./export -exportOptionsPlist ExportOptions.plist
 
-    - uses: apple-actions/upload-testflight-build@v1
-      with: 
-        app-path: 'export/edx.ipa' 
-        issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-        api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
-        api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+#    - uses: apple-actions/upload-testflight-build@v1
+#      with: 
+#        app-path: 'export/edx.ipa' 
+#        issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+#        api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
+#        api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
 #    - run: echo "This job's status is ${{ job.status }}."
