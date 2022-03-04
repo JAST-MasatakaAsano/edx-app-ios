@@ -46,10 +46,14 @@ jobs:
         api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-    - name: change bundle-id
-      run: |
-        sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
-        sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./ExportOptions.plist
+#    - name: change bundle-id
+#      run: |
+#        sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
+#        sed -i '' 's/org.gacco.mobile/${{ env.bundle-id }}/g' ./ExportOptions.plist
+
+    - run: |
+        sed -i '' 's/CODE_SIGN_STYLE = Automatic/CODE_SIGN_STYLE = Manual/g' ./edX.xcodeproj/project.pbxproj
+#        sed -i '' 's/CODE_SIGN_IDENTITY = "iPhone Developer"/CODE_SIGN_IDENTITY = "Apple Distribution"/g' ./edX.xcodeproj/project.pbxproj
 
     - uses: poad/xcode-build-number-auto-update@v1
       with:
