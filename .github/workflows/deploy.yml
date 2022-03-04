@@ -53,7 +53,8 @@ jobs:
 
     - run: |
         sed -i '' 's/org.edx.mobile/${{ env.bundle-id }}/g' ./edX.xcodeproj/project.pbxproj
-        sed -i '' 'DEVELOPMENT_TEAM = '\"''\"'/DEVELOPMENT_TEAM = D9JR2A674U/g' ./edX.xcodeproj/project.pbxproj
+        sed -i '' 's/DEVELOPMENT_TEAM = '\"''\"'/DEVELOPMENT_TEAM = D9JR2A674U/g' ./edX.xcodeproj/project.pbxproj
+        cat edX.xcodeproj/project.pbxproj
 #        sed -i '' 's/CODE_SIGN_STYLE = Automatic/CODE_SIGN_STYLE = Manual/g' ./edX.xcodeproj/project.pbxproj
 #        sed -i '' 's/CODE_SIGN_IDENTITY = "iPhone Developer"/CODE_SIGN_IDENTITY = "Apple Distribution"/g' ./edX.xcodeproj/project.pbxproj
 
