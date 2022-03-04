@@ -24,8 +24,8 @@ jobs:
     steps:
     - run: echo ${{github.ref}}
 
-    - run: echo "bundle-id=org.gacco.mobile.develop" >> $GITHUB_ENV
-      if: contains(github.ref, 'develop')
+#    - run: echo "bundle-id=org.gacco.mobile.develop" >> $GITHUB_ENV
+#      if: contains(github.ref, 'develop')
 
     - uses: actions/checkout@v2
       with:
