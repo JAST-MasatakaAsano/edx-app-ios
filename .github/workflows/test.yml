@@ -8,6 +8,9 @@ on:
         description: bundle-id
         options: 
         - org.gacco.mobile.feature
+      input-ref:
+        type: message
+        description: ref
 
 env:
   bundle-id: ${{ github.event.inputs.bundle-id }}
@@ -21,7 +24,7 @@ jobs:
 
       - uses: actions/checkout@v2
         with:
-          ref: '43d13d6a1b04fe982f15e4c900eaae00680dee5a'
+          ref: ${{ github.event.inputs.input-ref }}
           persist-credentials: false
 
       - run: cat AUTHORS
