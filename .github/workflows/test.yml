@@ -19,6 +19,12 @@ jobs:
     steps:
       - run: echo ${{github.ref}}
 
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - run: cat AUTHORS
+
       - run: echo "build-number=$(date +'%Y%m%d.%H%M')" >> $GITHUB_ENV
         env:
           TZ: 'Asia/Tokyo'
